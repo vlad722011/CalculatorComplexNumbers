@@ -1,9 +1,6 @@
 package org.Calculator;
 
 public class ComputingModuleClass implements CalculableFactoryInterface, Calculable {
-    CalculableFactoryClass calculableFactory;
-    ComplexNumber first = new ComplexNumber(0, 0);
-    ComplexNumber second = new ComplexNumber(0, 0);
     ComplexNumber resultNumber = new ComplexNumber(0, 0);
     String result;
     ComplexNumber number = new ComplexNumber(0.0,0.0);
