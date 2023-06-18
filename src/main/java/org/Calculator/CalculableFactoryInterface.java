@@ -1,6 +1,6 @@
 package org.Calculator;
 
 public interface CalculableFactoryInterface {
-    Calculable createStartArgument(String complexNumber);
-    Calculable CreateArgumentForConvertation(String complexNumber);
+    Calculable createArg(ComplexNumber number);
+    Calculable CreateArgForConvertation(ComplexNumber number);
 }
