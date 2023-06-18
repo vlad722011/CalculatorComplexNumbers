@@ -4,7 +4,7 @@ public class ComplexNumber {
     private double realPart;
     private double imaginaryPart;
 
-    public ComplexNumber(int realPart, int imaginaryPart) {
+    public ComplexNumber(double realPart, double imaginaryPart) {
         this.realPart = realPart;
         this.imaginaryPart = imaginaryPart;
     }

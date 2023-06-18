@@ -5,13 +5,8 @@ public class ComputingModuleClass implements CalculableFactoryInterface, Calcula
     ComplexNumber first = new ComplexNumber(0, 0);
     ComplexNumber second = new ComplexNumber(0, 0);
     ComplexNumber resultNumber = new ComplexNumber(0, 0);
-
-    public ComputingModuleClass(CalculableFactoryClass calculableFactory, ComplexNumber first, ComplexNumber second, ComplexNumber resultNumber) {
-        this.calculableFactory = calculableFactory;
-        this.first = first;
-        this.second = second;
-        this.resultNumber = resultNumber;
-    }
+    String result;
+    ComplexNumber number = new ComplexNumber(0.0,0.0);
 
     public ComputingModuleClass(ComplexNumber number) {
     }
@@ -30,7 +25,6 @@ public class ComputingModuleClass implements CalculableFactoryInterface, Calcula
         return (Calculable) this;
     }
 
-
     @Override
     public Calculable subtraction(ComplexNumber first, ComplexNumber second) {
         // первое комплексное число -> (a + bi)
@@ -45,7 +39,6 @@ public class ComputingModuleClass implements CalculableFactoryInterface, Calcula
         System.out.printf("Промежуточный результат: -> %s\n", resultNumber);
         return (Calculable) this;
     }
-
 
     @Override
     public Calculable multi(ComplexNumber first, ComplexNumber second) {
@@ -76,6 +69,66 @@ public class ComputingModuleClass implements CalculableFactoryInterface, Calcula
         return (Calculable) this;
     }
 
+    public String ConverterResultToTrigonometric(ComplexNumber number) {
+        this.number = number;
+        StringBuilder builder = new StringBuilder();
+        double r;
+        double argZ;
+        double realParts = number.getRealPart();
+        double imaginaryParts = number.getImaginaryPart();
+        r = Math.sqrt(((double) (realParts * realParts) + (imaginaryParts * imaginaryParts)));
+
+        if (realParts > 0 && imaginaryParts > 0) {
+            argZ = Math.atan((double) (imaginaryParts / realParts));
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+        if (realParts > 0 && imaginaryParts < 0) {
+            argZ = -Math.atan((double) (imaginaryParts / realParts));
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+        if (realParts < 0 && imaginaryParts > 0) {
+            argZ = Math.PI - Math.atan((double) (imaginaryParts / realParts));
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+        if (realParts < 0 && imaginaryParts < 0) {
+            argZ = -Math.PI + Math.atan((double) (imaginaryParts / realParts));
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+        if (realParts == 0 && imaginaryParts > 0) {
+            argZ = Math.PI / 2;
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+        if (realParts == 0 && imaginaryParts < 0) {
+            argZ = -Math.PI / 2;
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+        if (realParts > 0 && imaginaryParts == 0) {
+            argZ = 0;
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+
+        else if (realParts < 0 && imaginaryParts == 0) {
+            argZ = Math.PI;
+            СollectResultString(builder, r, argZ);
+            return this.toString();
+        }
+       return "";
+    }
+
+    private void СollectResultString(StringBuilder builder, double r, double argZ) {
+        result = String.valueOf(builder.append(String.format("%.5f", r)).append(" - ").append("cos(")
+                .append(String.format("%.5f", argZ)).append(") + ").append("i").append(" - sin(")
+                .append(String.format("%.5f", argZ)).append("))"));
+        System.out.printf("Результат в тригонометрической форме: %s\n", result);
+    }
+
     @Override
     public Calculable createArg(ComplexNumber number) {
         return this;
@@ -84,16 +137,6 @@ public class ComputingModuleClass implements CalculableFactoryInterface, Calcula
     @Override
     public ComplexNumber getResult() {
         return resultNumber;
-    }
-
-    @Override
-    public ComplexNumber ConverterResultToTrigonometric(ComplexNumber number) {
-        return null;
-    }
-
-    @Override
-    public Calculable CreateArgForConvertation(ComplexNumber complexNumber) {
-        return null;
     }
 
     private static DataToCalculateSum getDataToCalculateSum(ComplexNumber first, ComplexNumber second) {
@@ -157,5 +200,4 @@ public class ComputingModuleClass implements CalculableFactoryInterface, Calcula
 
     private record ResultDataForDivision(Double realParts, Double imaginaryParts) {
     }
-
 }

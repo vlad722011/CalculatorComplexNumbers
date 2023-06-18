@@ -15,6 +15,7 @@ public class ViewCalculator {
 
             ComplexNumber first = GetFirstComplexNumber();
             Calculable calculator = calculableFactory.createArg(first);
+
             while (true) {
                 String cmd = prompt("Выберите какое действие между числами необходимо произвести -> (+, -, *, /, =): ");
                 if (cmd.equals("+")) {
@@ -39,7 +40,8 @@ public class ViewCalculator {
                 }
                 if (cmd.equals("=")) {
                     resultNumber = calculator.getResult();
-                    System.out.printf("Результат: %s\n", resultNumber);
+                    System.out.printf("Результат в алгебраической форме: %s\n", resultNumber);
+                    calculator.ConverterResultToTrigonometric(resultNumber);
                     break;
                 }
             }
